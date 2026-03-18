@@ -2,8 +2,6 @@
 # Makefile
 #
 MODULES = safesession
-EXTENSION = safesession  # the extension's name
-DATA = safesession--1.0.0.sql safesession--1.0.4.sql
 
 ifdef USE_PGXS
 REGRESS_OPTS = --temp-instance=/tmp/5555 --port=5555 --temp-config safesession.conf
@@ -22,6 +20,3 @@ top_builddir = ../..
 include $(top_builddir)/src/Makefile.global
 include $(top_srcdir)/contrib/contrib-global.mk
 endif
-
-pgxn:
-	git archive --format zip  --output ../pgxn/safesession/safesession-1.0.3.zip master

@@ -1,5 +1,5 @@
 {
-   "name": "pg_readonly",
+   "name": "safesession",
    "abstract": "set all cluster databases in read only",
    "version": "1.0.4",
    "maintainer": [
@@ -19,20 +19,20 @@
       }
    },
    "provides": {
-     "pg_readonly": {
+     "safesession": {
          "abstract": "set all cluster databases in read only",
-         "file": "pg_readonly.c",
+         "file": "safesession.c",
          "docfile": "README.md",
          "version": "1.0.4"
       }
    },
    "resources": {
       "bugtracker": {
-         "web": "http://github.com/pierreforstmann/pg_readonly/issues"
+         "web": "http://github.com/pierreforstmann/safesession/issues"
       },
       "repository": {
-        "url":  "https://github.com/pierreforstmann/pg_readonly.git",
-        "web":  "https://github.com/pierreforstmann/pg_readonly",
+        "url":  "https://github.com/pierreforstmann/safesession.git",
+        "web":  "https://github.com/pierreforstmann/safesession",
         "type": "git"
       }
    },

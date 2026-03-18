@@ -19,7 +19,16 @@
 #include "tcop/utility.h"
 #include "utils/guc.h"
 
+#define SAFESESSION_VERSION "0.1"
+
+#ifdef PG_MODULE_MAGIC_EXT
+PG_MODULE_MAGIC_EXT(
+	.name = "safesession",
+	.version = SAFESESSION_VERSION
+);
+#else
 PG_MODULE_MAGIC;
+#endif
 
 /* Saved hook values in case of unload */
 static ExecutorStart_hook_type prev_executor_start_hook = NULL;

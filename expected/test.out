@@ -47,3 +47,53 @@ SELECT lo_create(0);
      16389
 (1 row)
 
+-- Bypass attempts via set_config() must not disable read-only mode
+SELECT pg_catalog.set_config('transaction_read_only', 'off', false);
+ERROR:  transaction read-write mode must be set before any query
+SELECT pg_catalog.set_config('default_transaction_read_only', 'off', false);
+ set_config 
+------------
+ off
+(1 row)
+
+insert into t values (1);
+ERROR:  cannot execute INSERT in a read-only transaction
+SHOW transaction_read_only;
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+SHOW default_transaction_read_only;
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+
+-- Bypass attempt via set_config inside an explicit transaction block
+BEGIN;
+SELECT pg_catalog.set_config('transaction_read_only', 'off', true);
+ERROR:  transaction read-write mode must be set before any query
+ROLLBACK;
+BEGIN;
+SELECT pg_catalog.set_config('default_transaction_read_only', 'off', true);
+ set_config 
+------------
+ off
+(1 row)
+
+insert into t values (1);
+ERROR:  cannot execute INSERT in a read-only transaction
+COMMIT;
+SHOW transaction_read_only;
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+SHOW default_transaction_read_only;
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+

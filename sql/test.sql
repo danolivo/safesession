@@ -35,3 +35,24 @@ with inserted as (insert into t values(3) returning 3) select * from inserted;
 
 -- Large object creation is blocked
 SELECT lo_create(0);
+
+-- Bypass attempts via set_config() must not disable read-only mode
+SELECT pg_catalog.set_config('transaction_read_only', 'off', false);
+SELECT pg_catalog.set_config('default_transaction_read_only', 'off', false);
+insert into t values (1);
+
+SHOW transaction_read_only;
+SHOW default_transaction_read_only;
+
+-- Bypass attempt via set_config inside an explicit transaction block
+BEGIN;
+SELECT pg_catalog.set_config('transaction_read_only', 'off', true);
+ROLLBACK;
+
+BEGIN;
+SELECT pg_catalog.set_config('default_transaction_read_only', 'off', true);
+insert into t values (1);
+COMMIT;
+
+SHOW transaction_read_only;
+SHOW default_transaction_read_only;

@@ -40,8 +40,7 @@ AI agent begins issuing queries.  Once loaded, the hooks remain active for
 the lifetime of the session — there is no way to unload them.
 
 **Warning:** if safesession is added to `shared_preload_libraries`, it will
-force **every session in the entire cluster** into read-only mode — including
-autovacuum workers and replication connections.  This is almost certainly not
+force **every session in the entire cluster** into read-only mode.  This is almost certainly not
 what you want.  Use `LOAD` for per-session activation instead.
 
 ## Installation
